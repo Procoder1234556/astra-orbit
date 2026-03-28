@@ -99,9 +99,9 @@ const Community = () => {
             >
               <div className="flex items-center gap-2">
                 {post.platform === "Instagram" ? (
-                  <Instagram className="h-4 w-4 text-pink-400" />
+                  <Instagram className="h-4 w-4 text-destructive" />
                 ) : (
-                  <Linkedin className="h-4 w-4 text-blue-400" />
+                  <Linkedin className="h-4 w-4 text-primary" />
                 )}
                 <span className="text-sm font-medium">{post.handle}</span>
                 <span className="ml-auto text-xs text-muted-foreground">{post.time}</span>
