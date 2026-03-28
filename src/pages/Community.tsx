@@ -38,7 +38,7 @@ const posts: SocialPost[] = [
   },
   {
     platform: "linkedin",
-    handle: "TechAstra Community",
+    handle: "TechAstra",
     avatar: "TA",
     content: "We're thrilled to share that TechAstra just crossed 1,000 active members! 🎉\n\nWhat started as a small Discord server is now a full ecosystem — hackathon tracking, AI mentors, gamified learning paths, and a community that genuinely supports each other.\n\nTo every Nebula, Starbound, and Supernova out there — you make this possible.",
     likes: 892,
@@ -72,7 +72,7 @@ const posts: SocialPost[] = [
   },
   {
     platform: "linkedin",
-    handle: "TechAstra Community",
+    handle: "TechAstra",
     avatar: "TA",
     content: "🏆 Congratulations to our Q1 Supernova Top 10!\n\nThese members earned 500+ AstraPoints through hackathon registrations, roadmap completions, and community contributions.\n\nYour dedication to growth is truly inspiring. Keep reaching for the stars.",
     image: teamWin,
@@ -96,7 +96,7 @@ const posts: SocialPost[] = [
   },
   {
     platform: "linkedin",
-    handle: "TechAstra Community",
+    handle: "TechAstra",
     avatar: "TA",
     content: "From Nebula to Supernova in 60 days — meet Priya, who went from \"I don't know where to start\" to placing 3rd at ETHGlobal by following our Web3 roadmap and participating in every community hackathon.\n\nHer secret? Consistency and the power of community support. Read the full story on our blog.",
     likes: 678,
