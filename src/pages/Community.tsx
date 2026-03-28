@@ -96,7 +96,7 @@ const posts: SocialPost[] = [
   },
   {
     platform: "linkedin",
-    handle: "TechAstra Community",
+    handle: "TechAstra",
     avatar: "TA",
     content: "From Nebula to Supernova in 60 days — meet Priya, who went from \"I don't know where to start\" to placing 3rd at ETHGlobal by following our Web3 roadmap and participating in every community hackathon.\n\nHer secret? Consistency and the power of community support. Read the full story on our blog.",
     likes: 678,
