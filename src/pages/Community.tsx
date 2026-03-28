@@ -38,7 +38,7 @@ const posts: SocialPost[] = [
   },
   {
     platform: "linkedin",
-    handle: "TechAstra Community",
+    handle: "TechAstra",
     avatar: "TA",
     content: "We're thrilled to share that TechAstra just crossed 1,000 active members! 🎉\n\nWhat started as a small Discord server is now a full ecosystem — hackathon tracking, AI mentors, gamified learning paths, and a community that genuinely supports each other.\n\nTo every Nebula, Starbound, and Supernova out there — you make this possible.",
     likes: 892,
