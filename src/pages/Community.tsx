@@ -72,7 +72,7 @@ const posts: SocialPost[] = [
   },
   {
     platform: "linkedin",
-    handle: "TechAstra Community",
+    handle: "TechAstra",
     avatar: "TA",
     content: "🏆 Congratulations to our Q1 Supernova Top 10!\n\nThese members earned 500+ AstraPoints through hackathon registrations, roadmap completions, and community contributions.\n\nYour dedication to growth is truly inspiring. Keep reaching for the stars.",
     image: teamWin,
