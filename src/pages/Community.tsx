@@ -96,12 +96,13 @@ const LinkedInPost = ({ post, index }: { post: SocialPost; index: number }) => (
 
     {/* Image if present */}
     {post.image && (
-      <div className="mt-3 overflow-hidden">
+      <div className="mt-3 overflow-hidden aspect-video relative">
         <img
           src={post.image}
           alt={post.imageAlt || ""}
           loading="lazy"
-          className="w-full object-cover"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
         />
       </div>
     )}
