@@ -1,90 +1,30 @@
 import { motion } from "framer-motion";
+import AnimatedCard from "@/components/AnimatedCard";
+import { staggerContainer, fadeIn } from "@/lib/animations";
 import { Calendar, MapPin, Users, ExternalLink, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { hackathons } from "@/data/hackathons";
+import { WHATSAPP_URL } from "@/lib/constants";
 
-const hackathons = [
-  {
-    id: 1,
-    title: "HackIndia 2026",
-    date: "April 12–14, 2026",
-    location: "Bangalore, India",
-    mode: "Hybrid",
-    participants: 5000,
-    tags: ["AI/ML", "Web3", "Open Innovation"],
-    status: "Registering",
-    points: 20,
-  },
-  {
-    id: 2,
-    title: "ETHGlobal New Delhi",
-    date: "May 3–5, 2026",
-    location: "New Delhi, India",
-    mode: "In-Person",
-    participants: 1200,
-    tags: ["Blockchain", "DeFi", "Smart Contracts"],
-    status: "Registering",
-    points: 20,
-  },
-  {
-    id: 3,
-    title: "Google Summer of Code",
-    date: "June 1 – Aug 31, 2026",
-    location: "Remote",
-    mode: "Online",
-    participants: 12000,
-    tags: ["Open Source", "All Tracks"],
-    status: "Coming Soon",
-    points: 20,
-  },
-  {
-    id: 4,
-    title: "MLH Fellowship Hack",
-    date: "July 18–20, 2026",
-    location: "Virtual",
-    mode: "Online",
-    participants: 3000,
-    tags: ["Full Stack", "DevOps", "AI"],
-    status: "Registering",
-    points: 20,
-  },
-  {
-    id: 5,
-    title: "TechAstra Internal Jam",
-    date: "Aug 9–10, 2026",
-    location: "Community Discord",
-    mode: "Online",
-    participants: 500,
-    tags: ["UI/UX", "Web Dev", "Rapid Prototyping"],
-    status: "Coming Soon",
-    points: 20,
-  },
-  {
-    id: 6,
-    title: "Smart India Hackathon",
-    date: "Sept 20–22, 2026",
-    location: "Multi-City, India",
-    mode: "In-Person",
-    participants: 25000,
-    tags: ["GovTech", "EdTech", "HealthTech"],
-    status: "Registering",
-    points: 20,
-  },
-];
+
 
 const Hackathons = () => {
   const handleShare = (title: string) => {
     const text = `🚀 Check out "${title}" on TechAstra! Join the community:`;
-    const url = "https://chat.whatsapp.com/G36r2nPndpQ9wiVSodQWH8";
-    window.open(`https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, "_blank");
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(`${text} ${WHATSAPP_URL}`)}`,
+      "_blank",
+    );
   };
 
   return (
     <div className="min-h-screen px-4 pb-20 pt-24">
       <div className="mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          variants={fadeIn}
+          initial="hidden"
+          animate="visible"
         >
           <h1 className="font-display text-4xl font-bold">
             <span className="text-gradient-primary">Hackathons</span>
@@ -94,14 +34,16 @@ const Hackathons = () => {
           </p>
         </motion.div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {hackathons.map((h, i) => (
-            <motion.div
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+          className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {hackathons.map((h) => (
+            <AnimatedCard
               key={h.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.08 }}
-              className="group flex flex-col rounded-xl border border-border bg-gradient-card p-6 transition-all hover:border-primary/30"
+              className="group flex flex-col transition-all hover:border-primary/30"
             >
               <div className="flex items-start justify-between">
                 <Badge
@@ -154,9 +96,9 @@ const Hackathons = () => {
                   <Share2 className="h-3.5 w-3.5" />
                 </Button>
               </div>
-            </motion.div>
+            </AnimatedCard>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   );

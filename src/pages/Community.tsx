@@ -2,123 +2,10 @@ import { motion } from "framer-motion";
 import { Instagram, Linkedin, Heart, MessageCircle, Send, Bookmark, ExternalLink, ArrowRight, Users, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Starfield from "@/components/Starfield";
-
-import hackEvent from "@/assets/social/hack-event.jpg";
-import devSetup from "@/assets/social/dev-setup.jpg";
-import aiRoadmap from "@/assets/social/ai-roadmap.jpg";
-import teamWin from "@/assets/social/team-win.jpg";
-import systemDesign from "@/assets/social/system-design.jpg";
-import supernova from "@/assets/social/supernova.jpg";
-
-type SocialPost = {
-  platform: "instagram" | "linkedin";
-  handle: string;
-  avatar: string;
-  content: string;
-  image?: string;
-  imageAlt?: string;
-  likes: number;
-  comments: number;
-  time: string;
-  type: "image" | "reel" | "text" | "article";
-};
-
-const posts: SocialPost[] = [
-  {
-    platform: "instagram",
-    handle: "techastra",
-    avatar: "TA",
-    content: "🚀 HackIndia 2026 registrations are LIVE! 5,000+ builders. 48 hours. Unlimited energy. Tag your dream team 👇 #TechAstra #HackIndia",
-    image: hackEvent,
-    imageAlt: "Hackathon event with purple lights and coders",
-    likes: 1243,
-    comments: 87,
-    time: "2h",
-    type: "image",
-  },
-  {
-    platform: "linkedin",
-    handle: "TechAstra",
-    avatar: "TA",
-    content: "We're thrilled to share that TechAstra just crossed 1,000 active members! 🎉\n\nWhat started as a small Discord server is now a full ecosystem — hackathon tracking, AI mentors, gamified learning paths, and a community that genuinely supports each other.\n\nTo every Nebula, Starbound, and Supernova out there — you make this possible.",
-    likes: 892,
-    comments: 134,
-    time: "5h",
-    type: "article",
-  },
-  {
-    platform: "instagram",
-    handle: "techastra",
-    avatar: "TA",
-    content: "POV: Your setup when the AI/ML roadmap drops at midnight 🖥️✨ #devlife #codeaesthetic",
-    image: devSetup,
-    imageAlt: "Developer desk setup with triple monitors and moody lighting",
-    likes: 2156,
-    comments: 142,
-    time: "8h",
-    type: "reel",
-  },
-  {
-    platform: "instagram",
-    handle: "techastra",
-    avatar: "TA",
-    content: "New Roadmap Alert 🧠 AI/ML in 30 days — from zero to deploying your first model. Curated by Supernova-ranked mentors. Link in bio!",
-    image: aiRoadmap,
-    imageAlt: "Neural network brain visualization with glowing connections",
-    likes: 1878,
-    comments: 96,
-    time: "1d",
-    type: "image",
-  },
-  {
-    platform: "linkedin",
-    handle: "TechAstra",
-    avatar: "TA",
-    content: "🏆 Congratulations to our Q1 Supernova Top 10!\n\nThese members earned 500+ AstraPoints through hackathon registrations, roadmap completions, and community contributions.\n\nYour dedication to growth is truly inspiring. Keep reaching for the stars.",
-    image: teamWin,
-    imageAlt: "Team celebrating hackathon win with confetti",
-    likes: 456,
-    comments: 67,
-    time: "2d",
-    type: "article",
-  },
-  {
-    platform: "instagram",
-    handle: "techastra",
-    avatar: "TA",
-    content: "Workshop this Saturday 🏗️ System Design from scratch — load balancers, caching, microservices. Free for all community members! Save this post 🔖",
-    image: systemDesign,
-    imageAlt: "System design architecture diagram with glowing nodes",
-    likes: 934,
-    comments: 73,
-    time: "3d",
-    type: "image",
-  },
-  {
-    platform: "linkedin",
-    handle: "TechAstra",
-    avatar: "TA",
-    content: "From Nebula to Supernova in 60 days — meet Priya, who went from \"I don't know where to start\" to placing 3rd at ETHGlobal by following our Web3 roadmap and participating in every community hackathon.\n\nHer secret? Consistency and the power of community support. Read the full story on our blog.",
-    likes: 678,
-    comments: 89,
-    time: "4d",
-    type: "text",
-  },
-  {
-    platform: "instagram",
-    handle: "techastra",
-    avatar: "TA",
-    content: "The journey from Nebula → Supernova ✨🚀 Which rank are you? Drop your AstraPoints below 👇 #TechAstra #gamification",
-    image: supernova,
-    imageAlt: "Cosmic nebula with rocket ship silhouette",
-    likes: 3420,
-    comments: 256,
-    time: "5d",
-    type: "reel",
-  },
-];
-
-const formatNumber = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n));
+import { formatNumber } from "@/lib/utils";
+import { posts } from "@/data/posts";
+import { WHATSAPP_URL } from "@/lib/constants";
+import type { SocialPost } from "@/types";
 
 const InstagramPost = ({ post, index }: { post: SocialPost; index: number }) => (
   <motion.div
@@ -265,7 +152,7 @@ const Community = () => {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
-                href="https://chat.whatsapp.com/G36r2nPndpQ9wiVSodQWH8"
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -325,9 +212,9 @@ const Community = () => {
         <div className="mt-8 columns-1 gap-5 sm:columns-2 lg:columns-3">
           {posts.map((post, i) =>
             post.platform === "instagram" ? (
-              <InstagramPost key={i} post={post} index={i} />
+              <InstagramPost key={post.id} post={post} index={i} />
             ) : (
-              <LinkedInPost key={i} post={post} index={i} />
+              <LinkedInPost key={post.id} post={post} index={i} />
             )
           )}
         </div>

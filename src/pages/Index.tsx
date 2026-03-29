@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
+import AnimatedCard from "@/components/AnimatedCard";
+import { staggerContainer, fadeIn } from "@/lib/animations";
 import { Rocket, Code, Trophy, Users, Zap, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Starfield from "@/components/Starfield";
+import { WHATSAPP_URL } from "@/lib/constants";
 
 const features = [
   {
@@ -70,7 +73,7 @@ const Index = () => {
               </Button>
             </Link>
             <a
-              href="https://chat.whatsapp.com/G36r2nPndpQ9wiVSodQWH8"
+              href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -94,24 +97,26 @@ const Index = () => {
             Everything you need to <span className="text-gradient-primary">level up</span>
           </motion.h2>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {features.map((f, i) => (
-              <motion.div
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {features.map((f) => (
+              <AnimatedCard
                 key={f.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group rounded-xl bg-gradient-card border border-border p-6 transition-all hover:border-primary/30 hover:glow-primary"
+                className="group transition-all hover:border-primary/30 hover:glow-primary"
               >
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
                   <f.icon className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="font-display text-lg font-semibold">{f.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{f.desc}</p>
-              </motion.div>
+              </AnimatedCard>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
