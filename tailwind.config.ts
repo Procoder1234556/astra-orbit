@@ -57,6 +57,11 @@ export default {
           starbound: "hsl(var(--astra-starbound))",
           supernova: "hsl(var(--astra-supernova))",
         },
+        neon: {
+          blue: "hsl(var(--neon-blue))",
+          violet: "hsl(var(--neon-violet))",
+          cyan: "hsl(var(--neon-cyan))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -98,6 +103,10 @@ export default {
           "0%, 100%": { opacity: "0.4" },
           "50%": { opacity: "0.8" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -106,6 +115,7 @@ export default {
         "scale-in": "scale-in 0.3s ease-out",
         float: "float 6s ease-in-out infinite",
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
+        marquee: "marquee 40s linear infinite",
       },
     },
   },
