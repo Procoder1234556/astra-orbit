@@ -10,7 +10,7 @@ const AnimatedCard = ({ children, className, ...props }: AnimatedCardProps) => {
   return (
     <motion.div
       variants={fadeIn}
-      className={cn("rounded-xl border border-border bg-gradient-card p-6", className)}
+      className={cn("rounded-xl bg-glass-card neon-border p-6", className)}
       {...props}
     >
       {children}

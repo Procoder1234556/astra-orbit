@@ -71,7 +71,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <div className="flex items-center gap-2 rounded-full bg-inner-card border border-border px-3 py-1.5 shadow-inner-sm">
+          <div className="flex items-center gap-2 rounded-full bg-secondary border border-border px-3 py-1.5">
             <Trophy className="h-4 w-4 text-astra-gold drop-shadow-[0_0_8px_rgba(255,191,0,0.4)]" />
             <span className="text-sm font-bold text-foreground tracking-tight">{points}</span>
             <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest opacity-70">• {rank}</span>

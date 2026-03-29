@@ -16,6 +16,8 @@ import { useAuth } from "@/context/AuthContext";
 import { mockUser } from "@/data/user";
 import { getCssVar } from "@/lib/theme";
 import { getRankProgress } from "@/lib/utils";
+import { getCharacterById, getRandomCharacter, type TechCharacter } from "@/lib/characters";
+import { useEffect, useState } from "react";
 
 const skillData = [
   { skill: "DSA", value: 72 },
@@ -39,12 +41,25 @@ const savedResources = [
 
 const Profile = () => {
   const { user } = useAuth();
-  
-  // Use real user data with fallbacks to mock data for fields not in auth yet
+  const [character, setCharacter] = useState<TechCharacter | null>(null);
+
+  useEffect(() => {
+    // Check localStorage for persisted character, assign random if none
+    const stored = localStorage.getItem("astra_character");
+    if (stored) {
+      const found = getCharacterById(stored);
+      setCharacter(found || getRandomCharacter());
+    } else {
+      const newChar = getRandomCharacter();
+      localStorage.setItem("astra_character", newChar.id);
+      setCharacter(newChar);
+    }
+  }, []);
+
   const userData = {
     name: user?.user_metadata?.full_name || user?.email?.split('@')[0] || "Astra Member",
     email: user?.email || "guest@techastra.com",
-    points: mockUser.points, // Fallback to mock until DB is wired
+    points: mockUser.points,
     rank: mockUser.rank,
     nextRank: mockUser.nextRank,
     nextRankAt: mockUser.nextRankAt,
@@ -59,7 +74,7 @@ const Profile = () => {
   ];
 
   return (
-    <div className="min-h-screen px-4 pb-20 pt-24">
+    <div className="min-h-screen px-4 pb-20 pt-24 bg-gradient-hero">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <motion.div
@@ -68,14 +83,14 @@ const Profile = () => {
           animate="visible"
           className="flex flex-col items-start gap-6 sm:flex-row sm:items-center"
         >
-          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/20 text-3xl font-bold text-primary glow-primary">
+          <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10 text-3xl font-bold text-primary shadow-lg shadow-primary/10 neon-border">
             {userData.name.charAt(0).toUpperCase()}
           </div>
-          <div>
+          <div className="flex-1">
             <h1 className="font-display text-3xl font-bold">{userData.name}</h1>
             <p className="text-muted-foreground">{userData.email}</p>
             <div className="mt-2 flex items-center gap-3">
-              <div className="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1">
+              <div className="flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 neon-border">
                 <Trophy className="h-4 w-4 text-astra-gold" />
                 <span className="text-sm font-semibold">{userData.points} pts</span>
               </div>
@@ -85,6 +100,22 @@ const Profile = () => {
               </div>
             </div>
           </div>
+
+          {/* Character Badge */}
+          {character && (
+            <motion.div
+              initial={{ scale: 0, rotate: -10 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ type: "spring", stiffness: 200, delay: 0.3 }}
+              className="rounded-2xl bg-glass-card p-4 neon-border glow-neon text-center"
+            >
+              <div className={`mx-auto mb-2 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br ${character.color} text-2xl shadow-lg`}>
+                {character.emoji}
+              </div>
+              <p className="font-display text-sm font-bold">{character.name}</p>
+              <p className="mt-1 text-[10px] leading-tight text-muted-foreground max-w-[140px]">{character.description}</p>
+            </motion.div>
+          )}
         </motion.div>
 
         {/* Charts */}
@@ -94,8 +125,7 @@ const Profile = () => {
           animate="visible"
           className="mt-12 grid gap-6 lg:grid-cols-2"
         >
-          {/* Rank Radial */}
-          <AnimatedCard>
+          <AnimatedCard className="bg-glass-card neon-border">
             <h2 className="font-display text-xl font-semibold">Rank Progress</h2>
             <p className="text-sm text-muted-foreground">
               {userData.points} / {userData.nextRankAt} pts to {userData.nextRank}
@@ -126,8 +156,7 @@ const Profile = () => {
             </div>
           </AnimatedCard>
 
-          {/* Skill Radar */}
-          <AnimatedCard>
+          <AnimatedCard className="bg-glass-card neon-border">
             <h2 className="font-display text-xl font-semibold">Skill Radar</h2>
             <p className="text-sm text-muted-foreground">Based on your accessed resources</p>
             <div className="mt-4">
@@ -148,7 +177,7 @@ const Profile = () => {
                     dataKey="value"
                     stroke={getCssVar("--primary")}
                     fill={getCssVar("--primary")}
-                    fillOpacity={0.25}
+                    fillOpacity={0.2}
                     strokeWidth={2}
                   />
                 </RadarChart>
@@ -164,8 +193,7 @@ const Profile = () => {
           animate="visible"
           className="mt-12 grid gap-6 lg:grid-cols-2"
         >
-          {/* Enrolled Hackathons */}
-          <AnimatedCard>
+          <AnimatedCard className="bg-glass-card neon-border">
             <div className="flex items-center gap-2 mb-4">
               <Zap className="h-5 w-5 text-primary" />
               <h2 className="font-display text-xl font-semibold">Enrolled Hackathons</h2>
@@ -188,8 +216,7 @@ const Profile = () => {
             </div>
           </AnimatedCard>
 
-          {/* Saved Resources */}
-          <AnimatedCard>
+          <AnimatedCard className="bg-glass-card neon-border">
             <div className="flex items-center gap-2 mb-4">
               <BookOpen className="h-5 w-5 text-accent" />
               <h2 className="font-display text-xl font-semibold">Saved Resources</h2>

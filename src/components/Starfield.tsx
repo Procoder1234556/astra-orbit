@@ -10,7 +10,6 @@ const Starfield = () => {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Visibility Observer
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisible.current = entry.isIntersecting;
@@ -31,7 +30,7 @@ const Starfield = () => {
       y: Math.random() * canvas.height,
       radius: Math.random() * 1.5 + 0.5,
       speed: Math.random() * 0.3 + 0.1,
-      opacity: Math.random() * 0.8 + 0.2,
+      opacity: Math.random() * 0.3 + 0.05,
     }));
 
     let animId: number;
@@ -41,7 +40,7 @@ const Starfield = () => {
         stars.forEach((star) => {
           ctx.beginPath();
           ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(200, 210, 255, ${star.opacity})`;
+          ctx.fillStyle = `rgba(100, 100, 200, ${star.opacity})`;
           ctx.fill();
           star.y += star.speed;
           if (star.y > canvas.height) {

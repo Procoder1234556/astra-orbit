@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion } from "framer-motion";
-import { Rocket, Mail, Chrome, ArrowRight, Loader2 } from "lucide-react";
+import { Rocket, Mail, ArrowRight, Loader2 } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,8 +11,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
-import Starfield from "@/components/Starfield";
+import RocketLoader from "@/components/RocketLoader";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -22,6 +21,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [showRocket, setShowRocket] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -64,28 +64,55 @@ const Login = () => {
 
       if (error) throw error;
 
+      setShowRocket(true);
       toast.success("Successfully logged in with Google!");
-      navigate(from, { replace: true });
+
+      setTimeout(() => {
+        navigate(from, { replace: true });
+      }, 2500);
     } catch (error: any) {
       toast.error(error.message || "Google sign-in failed");
     }
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center px-4 py-12">
-      <Starfield />
-      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-background" />
+    <div className="relative flex min-h-screen items-center justify-center px-4 py-12 overflow-hidden">
+      {/* Rocket launch transition */}
+      <RocketLoader isVisible={showRocket} />
+
+      {/* Video background */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+        poster="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMxYTFhMmUiLz48L3N2Zz4="
+      >
+        <source
+          src="https://cdn.pixabay.com/video/2020/07/30/45666-445955974_large.mp4"
+          type="video/mp4"
+        />
+      </video>
+
+      {/* White-tinted overlay for readability */}
+      <div className="absolute inset-0 bg-background/85 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-background/90" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="relative z-10 w-full max-w-md"
       >
-        <div className="rounded-2xl border border-border bg-gradient-card p-8 shadow-2xl backdrop-blur-sm">
+        <div className="rounded-2xl bg-glass-card p-8 shadow-2xl neon-border glow-neon">
           <div className="mb-8 text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 glow-primary">
-              <Rocket className="h-6 w-6 text-primary" />
-            </div>
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent shadow-lg shadow-primary/20"
+            >
+              <Rocket className="h-7 w-7 text-primary-foreground" />
+            </motion.div>
             <h1 className="font-display text-2xl font-bold">Welcome to TechAstra</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               Log in to track hackathons and earn points
@@ -111,7 +138,7 @@ const Login = () => {
               )}
             </div>
 
-            <Button type="submit" className="w-full gap-2" disabled={isLoading}>
+            <Button type="submit" className="w-full gap-2 shadow-lg shadow-primary/20" disabled={isLoading}>
               {isLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
@@ -136,7 +163,7 @@ const Login = () => {
               onSuccess={handleGoogleSuccess}
               onError={() => toast.error("Google login failed")}
               useOneTap
-              theme="filled_black"
+              theme="outline"
               shape="pill"
             />
           </div>
